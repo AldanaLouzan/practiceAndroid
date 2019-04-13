@@ -10,7 +10,8 @@ import java.util.Random;
  */
 public class SetUp 
 {
-    Random rG = new Random();
+    //I use the random object to create to set the model,mobility,vision,arms,mediaCenter
+	Random rG = new Random();
     
     String [] model = {"Android mk1","Android mk2","Android mk3","Android mk4","Android mk5"};
     String [] brain = {"2.5GHZ","3.5GHZ","4.5GHZ"};
