@@ -10,6 +10,7 @@ import java.util.Random;
  */
 public class SetUp 
 {
+    //Random generator
     Random rG = new Random();
     
     String [] model = {"Android mk1","Android mk2","Android mk3","Android mk4","Android mk5"};
