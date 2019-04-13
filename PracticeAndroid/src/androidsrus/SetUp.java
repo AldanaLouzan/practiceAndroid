@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class SetUp 
 {
-    //Random generator
+    //I use the random object to create to set the model,mobility,vision,arms,mediaCenter
     Random rG = new Random();
     
     String [] model = {"Android mk1","Android mk2","Android mk3","Android mk4","Android mk5"};
@@ -43,6 +43,7 @@ public class SetUp
 //               a.setSerialNum(serialNum[(rG.nextInt())]);
 //            }    
 //        }    
+        //To assign the Brain: mk1 has brain 2.5GHZ, mk2 3.5GHZ the rest 4.5GHZ 
         if (a.getBrain() == null) 
         {
             if (a.getModel().equals(model[0]))
