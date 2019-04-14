@@ -11,7 +11,9 @@ public class AndroidsRus
     public static void main(String[] args) 
     {
         SetUp su = new SetUp();
-        System.out.println(su.androidsCreation());
+        su.androidsCreation();
+        //System.out.print(su.androidsCreation(a.));
+        
         
     } 
 }
