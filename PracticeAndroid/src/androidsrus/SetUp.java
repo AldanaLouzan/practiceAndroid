@@ -13,6 +13,7 @@ public class SetUp
     //I use the random object to create to set the model,mobility,vision,arms,mediaCenter
     Random rG = new Random();
     
+    
     String [] model = {"Android mk1","Android mk2","Android mk3","Android mk4","Android mk5"};
     String [] brain = {"2.5GHZ","3.5GHZ","4.5GHZ"};
     String [] mobility = {"catapilar tracks","wheels","legs"};
@@ -28,21 +29,45 @@ public class SetUp
             a.setModel(model[rG.nextInt(model.length)]);
         }
         
-//        if (a.getSerialNum()== null)
-//        {
-//            if(a.getModel().equals(model[0]))
-//            {
-//               ArrayList listNum = new ArrayList();
-//               for(int i=0; i<1000;i++)
-//                   {
-//                       listNum.add(i+1000);
-//                   }
-//               
-//               ArrayList serialMk1 = new ArrayList();
-//               serialMk1 = Collections.shuffle(listNum);
-//               a.setSerialNum(serialNum[(rG.nextInt())]);
-//            }    
-//        }    
+        if (a.getSerialNum()== null)
+        {
+            
+            if(a.getModel().equals(model[0]))
+            {
+                int mk1SerialNum;
+                mk1SerialNum = this.generateRandomSerialNum(1000,1999); 
+                
+                a.setSerialNum(String.valueOf(mk1SerialNum));
+            }
+            if(a.getModel().equals(model[1]))
+            {
+                int mk2SerialNum;
+                mk2SerialNum = this.generateRandomSerialNum(2000,2999); 
+                
+                a.setSerialNum(String.valueOf(mk2SerialNum));
+            } 
+            if(a.getModel().equals(model[2]))
+            {
+                int mk3SerialNum;
+                mk3SerialNum = this.generateRandomSerialNum(3000,3999); 
+                
+                a.setSerialNum(String.valueOf(mk3SerialNum));
+            }
+            if(a.getModel().equals(model[3]))
+            {
+                int mk4SerialNum;
+                mk4SerialNum = this.generateRandomSerialNum(4000,4999); 
+                
+                a.setSerialNum(String.valueOf(mk4SerialNum));
+            }
+            if(a.getModel().equals(model[4]))
+            {
+                int mk5SerialNum;
+                mk5SerialNum = this.generateRandomSerialNum(5000,5999); 
+                
+                a.setSerialNum(String.valueOf(mk5SerialNum));
+            } 
+        }    
         //To assign the Brain: mk1 has brain 2.5GHZ, mk2 3.5GHZ the rest 4.5GHZ 
         if (a.getBrain() == null) 
         {
@@ -115,5 +140,12 @@ public class SetUp
         }
         return listCurrentLine;
         
-    }     
+    } 
+    
+    public static int generateRandomSerialNum(int min, int max) 
+    {
+        Random r = new Random();
+        int serialNum = r.nextInt((max - min) + 1) + min;
+        return serialNum;
+    }    
 }
