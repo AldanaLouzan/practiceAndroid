@@ -3,6 +3,8 @@ package androidsrus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.UUID;
+
 
 /**
  *
@@ -12,6 +14,7 @@ public class SetUp
 {
     //I use the random object to create to set the model,mobility,vision,arms,mediaCenter
     Random rG = new Random();
+    ArrayList IDUsed = new ArrayList();
     
     
     String [] model = {"Android mk1","Android mk2","Android mk3","Android mk4","Android mk5"};
@@ -29,45 +32,121 @@ public class SetUp
             a.setModel(model[rG.nextInt(model.length)]);
         }
         
-        if (a.getSerialNum()== null)
-        {
+        if (a.getSerialNum() == null) {
+//            int serialNum = UUID.randomUUID().hashCode();
+//            a.setSerialNum(String.valueOf(serialNum));
+
             
-            if(a.getModel().equals(model[0]))
+            if (a.getModel().equals(model[0])) 
             {
                 int mk1SerialNum;
-                mk1SerialNum = this.generateRandomSerialNum(1000,1999); 
-                
-                a.setSerialNum(String.valueOf(mk1SerialNum));
+                mk1SerialNum = this.generateRandomSerialNum(1000, 1999);
+                boolean temp = this.checkID(IDUsed, mk1SerialNum);
+
+                while (temp == true) {
+                    mk1SerialNum = this.generateRandomSerialNum(1000, 1999);
+                    temp = this.checkID(IDUsed, mk1SerialNum);
+                }
+                if (temp == false) {
+                    a.setSerialNum(String.valueOf(mk1SerialNum));
+                    IDUsed.add(mk1SerialNum);
+                }
+
             }
-            if(a.getModel().equals(model[1]))
+            if (a.getModel().equals(model[1])) 
             {
                 int mk2SerialNum;
-                mk2SerialNum = this.generateRandomSerialNum(2000,2999); 
-                
-                a.setSerialNum(String.valueOf(mk2SerialNum));
-            } 
-            if(a.getModel().equals(model[2]))
+                mk2SerialNum = this.generateRandomSerialNum(2000, 2999);
+                boolean temp = this.checkID(IDUsed, mk2SerialNum);
+
+                while (temp == true) {
+                    mk2SerialNum = this.generateRandomSerialNum(2000, 2999);
+                    temp = this.checkID(IDUsed, mk2SerialNum);
+
+                }
+                if (temp == false) {
+                    a.setSerialNum(String.valueOf(mk2SerialNum));
+                    IDUsed.add(mk2SerialNum);
+                }
+
+            }
+//            {
+//                int mk3SerialNum;
+//                mk3SerialNum = this.generateRandomSerialNum(2000,2999); 
+//                
+//                a.setSerialNum(String.valueOf(mk3SerialNum));
+//            } 
+            if (a.getModel().equals(model[2])) 
             {
                 int mk3SerialNum;
-                mk3SerialNum = this.generateRandomSerialNum(3000,3999); 
-                
-                a.setSerialNum(String.valueOf(mk3SerialNum));
+                mk3SerialNum = this.generateRandomSerialNum(3000, 3999);
+                boolean temp = this.checkID(IDUsed, mk3SerialNum);
+
+                while (temp == true) {
+                    mk3SerialNum = this.generateRandomSerialNum(3000, 3999);
+                    temp = this.checkID(IDUsed, mk3SerialNum);
+
+                }
+                if (temp == false) {
+                    a.setSerialNum(String.valueOf(mk3SerialNum));
+                    IDUsed.add(mk3SerialNum);
+                }
+
             }
-            if(a.getModel().equals(model[3]))
+                
+//            {
+//                int mk3SerialNum;
+//                mk3SerialNum = this.generateRandomSerialNum(3000,3999); 
+//                
+//                a.setSerialNum(String.valueOf(mk3SerialNum));
+//            }
+            if (a.getModel().equals(model[3])) 
             {
                 int mk4SerialNum;
-                mk4SerialNum = this.generateRandomSerialNum(4000,4999); 
-                
-                a.setSerialNum(String.valueOf(mk4SerialNum));
+                mk4SerialNum = this.generateRandomSerialNum(4000, 4999);
+                boolean temp = this.checkID(IDUsed, mk4SerialNum);
+
+                while (temp == true) {
+                    mk4SerialNum = this.generateRandomSerialNum(4000, 4999);
+                    temp = this.checkID(IDUsed, mk4SerialNum);
+                }
+                if (temp == false) {
+                    a.setSerialNum(String.valueOf(mk4SerialNum));
+                    IDUsed.add(mk4SerialNum);
+                }
+
             }
+//            {
+//                int mk4SerialNum;
+//                mk4SerialNum = this.generateRandomSerialNum(4000,4999); 
+//                
+//                a.setSerialNum(String.valueOf(mk4SerialNum));
+//            }
             if(a.getModel().equals(model[4]))
-            {
+                {
                 int mk5SerialNum;
-                mk5SerialNum = this.generateRandomSerialNum(5000,5999); 
-                
-                a.setSerialNum(String.valueOf(mk5SerialNum));
-            } 
-        }    
+                mk5SerialNum = this.generateRandomSerialNum(5000, 5999);
+                boolean temp = this.checkID(IDUsed, mk5SerialNum);
+
+                while (temp == true) {
+                    mk5SerialNum = this.generateRandomSerialNum(5000, 5999);
+                    temp = this.checkID(IDUsed, mk5SerialNum);
+
+                }
+                if (temp == false) {
+                    a.setSerialNum(String.valueOf(mk5SerialNum));
+                    IDUsed.add(mk5SerialNum);
+                }
+
+            }
+        }
+//            {
+//                int mk5SerialNum;
+//                mk5SerialNum = this.generateRandomSerialNum(5000,5999); 
+//                
+//                a.setSerialNum(String.valueOf(mk5SerialNum));
+//            } 
+//        }    
         //To assign the Brain: mk1 has brain 2.5GHZ, mk2 3.5GHZ the rest 4.5GHZ 
         if (a.getBrain() == null) 
         {
@@ -142,10 +221,28 @@ public class SetUp
         
     } 
     
-    public static int generateRandomSerialNum(int min, int max) 
+    public int generateRandomSerialNum(int min, int max) 
     {
         Random r = new Random();
         int serialNum = r.nextInt((max - min) + 1) + min;
         return serialNum;
-    }    
+    }
+    
+    public boolean checkID (ArrayList listID, int ID )
+    {
+        boolean value = false;
+        //ArrayList IDUsed = new ArrayList();
+        //IDUsed2 = listID;
+        for(int i=0; i<listID.size();i++)
+        {
+            if (listID.get(i).equals(ID))
+                {
+                    value = true;
+                }
+                      
+        }    
+        return value;
+       
+                
+    }
 }
