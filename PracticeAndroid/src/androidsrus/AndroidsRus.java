@@ -1,5 +1,8 @@
 package androidsrus;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 
 /**
@@ -8,12 +11,13 @@ package androidsrus;
  */
 public class AndroidsRus 
 {
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException 
     {
         SetUp su = new SetUp();
-        su.androidsCreation();
-        //System.out.print(su.androidsCreation(a.));
-        
+        //This ArrayList has to be a HashMap or TreeMap
+        ArrayList<Android> listAndroidOld = new ArrayList();
+        listAndroidOld = su.androidsCreation();
+              
         
     } 
 }

@@ -1,12 +1,9 @@
 package androidsrus;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
@@ -14,17 +11,17 @@ import java.util.Scanner;
  */
 public class Data 
 {
-    private final String[] modelOldLine = new String[4];
-    private final String[] brain = new String[2];
-    private final String[] mobility = new String[2];
-    private final String[] vision = new String[2];
-    private final String[] arms = new String[2];
-    private final String[] mediaCenter = new String[2];
-    private final String[] powerPlant = new String[2];
+    String [] modelOld;
+    String [] brainOld;
+    String [] mobilityOld;
+    String [] visionOld;
+    String [] armsOld;
+    String [] mediaCenterOld;
+    String [] powerPlantOld;
 
     public Data(){}
     
-    //This method is used to generate all the data that will support the system
+//    //This method is used to generate all the data that will support the system
     public void generateAllData() throws FileNotFoundException, IOException
     {
         //open file
@@ -33,67 +30,82 @@ public class Data
         String line;
         while ((line = reader.readLine()) != null) 
         {
+            modelOld = line.split(",");
+ 
             line = reader.readLine();
-            String[] firstLine = line.split(",");
-            //firstLine = modelOldLine;
-
-            line = reader.readLine();
-            String[] brain = line.split(",");
-            //secondLine = brain;
+            brainOld = line.split(",");
 
             line = reader.readLine();
-            String[] mobility = line.split(",");
-            ////thirdLine = mobility;
+            mobilityOld = line.split(",");
 
             line = reader.readLine();
-            String[] vision = line.split(",");
-            //fourthLine = vision;
+            visionOld = line.split(",");
 
             line = reader.readLine();
-            String[] arms = line.split(",");
-            //fifthLine = arms;
+            armsOld = line.split(",");
 
             line = reader.readLine();
-            String[] mediaCenter = line.split(",");
-            //sixthLine = mediaCenter;
+            mediaCenterOld = line.split(",");
 
             line = reader.readLine();
-            String[] powerPlant = line.split(",");
-            //seventhLine = powerPlant;
-        }
-     
+            powerPlantOld = line.split(",");
+       }
     }
 
-    public void generateOldLineModel() throws IOException
-    {
-        
-    }
-    public String[] getModelOldLine() {
-        return modelOldLine;
+    public String[] getModelOld() {
+        return modelOld;
     }
 
-    public String[] getBrain() {
-        return brain;
+    public void setModelOld(String[] modelOld) {
+        this.modelOld = modelOld;
     }
 
-    public String[] getMobility() {
-        return mobility;
+    public String[] getBrainOld() {
+        return brainOld;
     }
 
-    public String[] getVision() {
-        return vision;
+    public void setBrainOld(String[] brainOld) {
+        this.brainOld = brainOld;
     }
 
-    public String[] getArms() {
-        return arms;
+    public String[] getMobilityOld() {
+        return mobilityOld;
     }
 
-    public String[] getMediaCenter() {
-        return mediaCenter;
+    public void setMobilityOld(String[] mobilityOld) {
+        this.mobilityOld = mobilityOld;
     }
 
-    public String[] getPowerPlant() {
-        return powerPlant;
+    public String[] getVisionOld() {
+        return visionOld;
+    }
+
+    public void setVisionOld(String[] visionOld) {
+        this.visionOld = visionOld;
+    }
+
+    public String[] getArmsOld() {
+        return armsOld;
+    }
+
+    public void setArmsOld(String[] armsOld) {
+        this.armsOld = armsOld;
+    }
+
+    public String[] getMediaCenterOld() {
+        return mediaCenterOld;
+    }
+
+    public void setMediaCenterOld(String[] mediaCenterOld) {
+        this.mediaCenterOld = mediaCenterOld;
+    }
+
+    public String[] getPowerPlantOld() {
+        return powerPlantOld;
+    }
+
+    public void setPowerPlantOld(String[] powerPlantOld) {
+        this.powerPlantOld = powerPlantOld;
     }
  
 }

@@ -5,9 +5,8 @@ package androidsrus;
  *
  * @author aldana
  */
-public class Androids 
+public class Android 
 {
-
     private String model;
     private String serialNum;
     private String brain;
@@ -17,9 +16,9 @@ public class Androids
     private String mediaCenter;
     private String powerPlant;
 
-    public Androids() {}
+    public Android() {}
 
-    public Androids(String model, String serialNum, String brain, String mobility, String vision, String arms, String mediaCenter, String powerPlant) 
+    public Android(String model, String serialNum, String brain, String mobility, String vision, String arms, String mediaCenter, String powerPlant) 
     {
         this.model = model;
         this.serialNum = serialNum;
