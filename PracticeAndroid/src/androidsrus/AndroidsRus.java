@@ -19,7 +19,10 @@ public class AndroidsRus
         //This ArrayList has to be a HashMap or TreeMap
         //ArrayList<Android> listAndroidOld = new ArrayList();
         Map <String,Android> oldAndroids = new HashMap<>();
+        Map <String,Android> newAndroids = new HashMap<>();
         su.creationOldLine();
+        //su.getRandomAndroid();
+        su.creationNewLine();
         //su.test();
               
         
