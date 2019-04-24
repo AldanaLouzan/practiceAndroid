@@ -12,12 +12,13 @@ import java.io.IOException;
 public class Data 
 {
     String [] modelOld;
-    String [] brainOld;
-    String [] mobilityOld;
-    String [] visionOld;
-    String [] armsOld;
-    String [] mediaCenterOld;
-    String [] powerPlantOld;
+    String [] modelNew;    
+    String [] brain;
+    String [] mobility;
+    String [] vision;
+    String [] arms;
+    String [] mediaCenter;
+    String [] powerPlant;
 
     public Data(){}
     
@@ -31,24 +32,27 @@ public class Data
         while ((line = reader.readLine()) != null) 
         {
             modelOld = line.split(",");
+            
+            line = reader.readLine();
+            modelNew = line.split(",");
  
             line = reader.readLine();
-            brainOld = line.split(",");
+            brain = line.split(",");
 
             line = reader.readLine();
-            mobilityOld = line.split(",");
+            mobility = line.split(",");
 
             line = reader.readLine();
-            visionOld = line.split(",");
+            vision = line.split(",");
 
             line = reader.readLine();
-            armsOld = line.split(",");
+            arms = line.split(",");
 
             line = reader.readLine();
-            mediaCenterOld = line.split(",");
+            mediaCenter = line.split(",");
 
             line = reader.readLine();
-            powerPlantOld = line.split(",");
+            powerPlant = line.split(",");
        }
     }
 
@@ -60,52 +64,61 @@ public class Data
         this.modelOld = modelOld;
     }
 
-    public String[] getBrainOld() {
-        return brainOld;
+    public String[] getBrain() {
+        return brain;
     }
 
-    public void setBrainOld(String[] brainOld) {
-        this.brainOld = brainOld;
+    public void setBrain(String[] brainOld) {
+        this.brain = brainOld;
     }
 
-    public String[] getMobilityOld() {
-        return mobilityOld;
+    public String[] getMobility() {
+        return mobility;
     }
 
-    public void setMobilityOld(String[] mobilityOld) {
-        this.mobilityOld = mobilityOld;
+    public void setMobility(String[] mobility) {
+        this.mobility = mobility;
     }
 
-    public String[] getVisionOld() {
-        return visionOld;
+    public String[] getVision() {
+        return vision;
     }
 
-    public void setVisionOld(String[] visionOld) {
-        this.visionOld = visionOld;
+    public void setVision(String[] vision) {
+        this.vision = vision;
     }
 
-    public String[] getArmsOld() {
-        return armsOld;
+    public String[] getArms() {
+        return arms;
     }
 
-    public void setArmsOld(String[] armsOld) {
-        this.armsOld = armsOld;
+    public void setArms(String[] arms) {
+        this.arms = arms;
     }
 
-    public String[] getMediaCenterOld() {
-        return mediaCenterOld;
+    public String[] getMediaCenter() {
+        return mediaCenter;
     }
 
-    public void setMediaCenterOld(String[] mediaCenterOld) {
-        this.mediaCenterOld = mediaCenterOld;
+    public void setMediaCenter(String[] mediaCenter) {
+        this.mediaCenter = mediaCenter;
     }
 
-    public String[] getPowerPlantOld() {
-        return powerPlantOld;
+    public String[] getPowerPlant() {
+        return powerPlant;
     }
 
-    public void setPowerPlantOld(String[] powerPlantOld) {
-        this.powerPlantOld = powerPlantOld;
+    public void setPowerPlant(String[] powerPlant) {
+        this.powerPlant = powerPlant;
     }
+
+    public void setModelNew(String[] modelNew) {
+        this.modelNew = modelNew;
+    }
+
+    public String[] getModelNew() {
+        return modelNew;
+    }
+    
  
 }

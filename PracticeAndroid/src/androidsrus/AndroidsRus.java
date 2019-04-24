@@ -1,7 +1,9 @@
 package androidsrus;
 
 import java.io.IOException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -15,8 +17,10 @@ public class AndroidsRus
     {
         SetUp su = new SetUp();
         //This ArrayList has to be a HashMap or TreeMap
-        ArrayList<Android> listAndroidOld = new ArrayList();
-        listAndroidOld = su.androidsCreation();
+        //ArrayList<Android> listAndroidOld = new ArrayList();
+        Map <String,Android> oldAndroids = new HashMap<>();
+        su.creationOldLine();
+        //su.test();
               
         
     } 
