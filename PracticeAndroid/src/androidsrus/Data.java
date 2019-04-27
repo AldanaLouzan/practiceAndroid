@@ -11,6 +11,7 @@ import java.io.IOException;
  */
 public class Data 
 {
+    //I will store the data in Arrays 
     String [] modelOld;
     String [] modelNew;    
     String [] brain;
@@ -19,18 +20,19 @@ public class Data
     String [] arms;
     String [] mediaCenter;
     String [] powerPlant;
-    String [] parts;
+    String [] parts; //I will use to keep track of the donation of the different parts
     
 
     public Data(){}
     
-//    //This method is used to generate all the data that will support the system
+//    //This method is used to get all the data from a text file, that will support the system
     public void getAllData() throws FileNotFoundException, IOException
     {
-        //open file
+        //Open file
         BufferedReader reader = new BufferedReader(new FileReader("data.txt"));
         //Read lines for lines
         String line;
+        //Store the data in Arrays 
         while ((line = reader.readLine()) != null) 
         {
             modelOld = line.split(",");
@@ -60,65 +62,33 @@ public class Data
             parts = line.split(",");
        }
     }
-
+//As this class is only to get data from a file, I dont need setters
     public String[] getModelOld() {
         return modelOld;
-    }
-
-    public void setModelOld(String[] modelOld) {
-        this.modelOld = modelOld;
     }
 
     public String[] getBrain() {
         return brain;
     }
 
-    public void setBrain(String[] brainOld) {
-        this.brain = brainOld;
-    }
-
     public String[] getMobility() {
         return mobility;
-    }
-
-    public void setMobility(String[] mobility) {
-        this.mobility = mobility;
     }
 
     public String[] getVision() {
         return vision;
     }
 
-    public void setVision(String[] vision) {
-        this.vision = vision;
-    }
-
     public String[] getArms() {
         return arms;
-    }
-
-    public void setArms(String[] arms) {
-        this.arms = arms;
     }
 
     public String[] getMediaCenter() {
         return mediaCenter;
     }
 
-    public void setMediaCenter(String[] mediaCenter) {
-        this.mediaCenter = mediaCenter;
-    }
-
     public String[] getPowerPlant() {
         return powerPlant;
-    }
-
-    public void setPowerPlant(String[] powerPlant) {
-        this.powerPlant = powerPlant;
-    }
-
-    public void setModelNew(String[] modelNew) {
-        this.modelNew = modelNew;
     }
 
     public String[] getModelNew() {
@@ -129,9 +99,4 @@ public class Data
         return parts;
     }
 
-    public void setParts(String[] parts) {
-        this.parts = parts;
-    }
-    
- 
 }

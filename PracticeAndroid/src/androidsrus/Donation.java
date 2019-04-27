@@ -10,7 +10,7 @@ public class Donation
     public String reciever;
     public String part;
 
-    public Donation(){}
+    public Donation(){} //This object will be use to keep track of the donation of parts
 
     public Donation(String donator, String reciever, String part) 
     {
