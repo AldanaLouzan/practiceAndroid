@@ -1,4 +1,3 @@
-
 package androidsrus;
 
 /**
@@ -113,7 +112,7 @@ public class Android
     @Override
     public String toString() 
     {
-        return "Androids " + "Model: " + model + ", Serial Number: " + serialNum + ", Brain: " + brain + ", Mobility: " + mobility + ", Vision: " + vision + ", Arms: " + arms + ", Media Center: " + mediaCenter + ", Power Plant: " + powerPlant;
+        return "Android Model: " + model + ", Serial Number: " + serialNum + ", Brain: " + brain + ", Mobility: " + mobility + ", Vision: " + vision + ", Arms: " + arms + ", Media Center: " + mediaCenter + ", Power Plant: " + powerPlant;
     }
 
 }

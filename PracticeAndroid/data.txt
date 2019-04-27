@@ -1,8 +1,9 @@
 Android mk1,Android mk2,Android mk3,Android mk4,Android mk5
-Andy the Android,Betty the Busibot, Bobi the Racedroid,Fred the Friendlybot
+Andy the Android,Betty the Busibot,Bobi the Racedroid,Fred the Friendlybot
 2.5GHZ,3.5GHZ,4.5GHZ
 Catapilar tracks,Wheels,Legs
 Heat vision,Full color,Night vision
 Claws,Grippers,Articulated fingers
 Sony,jvc,Meridian
 Lithium,Hydrogen,Plasma(40 watt range)
+Arms,Brain,Media Center,Mobility,Power Plant,Vision 

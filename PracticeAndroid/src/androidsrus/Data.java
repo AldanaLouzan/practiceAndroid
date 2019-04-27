@@ -19,11 +19,13 @@ public class Data
     String [] arms;
     String [] mediaCenter;
     String [] powerPlant;
+    String [] parts;
+    
 
     public Data(){}
     
 //    //This method is used to generate all the data that will support the system
-    public void generateAllData() throws FileNotFoundException, IOException
+    public void getAllData() throws FileNotFoundException, IOException
     {
         //open file
         BufferedReader reader = new BufferedReader(new FileReader("data.txt"));
@@ -53,6 +55,9 @@ public class Data
 
             line = reader.readLine();
             powerPlant = line.split(",");
+            
+            line = reader.readLine();
+            parts = line.split(",");
        }
     }
 
@@ -118,6 +123,14 @@ public class Data
 
     public String[] getModelNew() {
         return modelNew;
+    }
+
+    public String[] getParts() {
+        return parts;
+    }
+
+    public void setParts(String[] parts) {
+        this.parts = parts;
     }
     
  

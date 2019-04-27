@@ -16,15 +16,13 @@ public class AndroidsRus
     public static void main(String[] args) throws IOException 
     {
         SetUp su = new SetUp();
-        //This ArrayList has to be a HashMap or TreeMap
-        //ArrayList<Android> listAndroidOld = new ArrayList();
-        Map <String,Android> oldAndroids = new HashMap<>();
-        Map <String,Android> newAndroids = new HashMap<>();
-        su.creationOldLine();
-        //su.getRandomAndroid();
-        su.creationNewLine();
-        //su.test();
-              
+        MenuSetUp mSu = new MenuSetUp();
+        Data d = new Data();
+        d.getAllData();
+
+        su.creationOldLine(d);
+        su.creationNewLine(d);
         
+        Menu menu = new Menu(d, mSu,su);     
     } 
 }

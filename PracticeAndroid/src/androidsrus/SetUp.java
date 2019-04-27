@@ -2,11 +2,8 @@ package androidsrus;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 
 
@@ -16,12 +13,22 @@ import java.util.Random;
  */
 public class SetUp 
 {
-    //I use the random object to create to set the model,mobility,vision,arms,mediaCenter
+    
     Random rG = new Random();
-    ArrayList IDUsed = new ArrayList();
+    
     Data d = new Data();
-    Map <String,Android> oldAndroids = new HashMap<>();
+    Map <String,Android> oldInitialAndroids = new HashMap<>();
+    Map <String,Android> oldFinalAndroids = new HashMap<>();
     Map <String,Android> newAndroids = new HashMap<>();
+        
+    Map <String, ArrayList<Donation>> parts = new HashMap<>();
+    ArrayList <Donation> donationArms = new ArrayList();
+    ArrayList <Donation> donationBrain = new ArrayList();
+    ArrayList <Donation> donationMobility = new ArrayList();
+    ArrayList <Donation> donationMediaCenter = new ArrayList();
+    ArrayList <Donation> donationPowerPlant = new ArrayList();
+    ArrayList <Donation> donationVision = new ArrayList();        
+        
     
             
     public Android oldLine (Android a, Data d)
@@ -35,19 +42,19 @@ public class SetUp
         {
             int mkSerialNum;
             mkSerialNum = this.generateRandomSerialNum(1000000, 1999999);
-            boolean temp = this.checkID(IDUsed, mkSerialNum);
+            boolean temp = oldInitialAndroids.containsKey(mkSerialNum);
+
 
             while (temp == true) {
                 mkSerialNum = this.generateRandomSerialNum(1000000, 1999999);
-                temp = this.checkID(IDUsed, mkSerialNum);
+                temp = oldInitialAndroids.containsKey(mkSerialNum);
             }
             if (temp == false) {
                 a.setSerialNum(String.valueOf(mkSerialNum));
-                IDUsed.add(mkSerialNum);
+
             }
         }
-  
-        //To assign the Brain: mk1 has brain 2.5GHZ, mk2 3.5GHZ the rest 4.5GHZ 
+
         if (a.getBrain() == null) 
         {
             a.setBrain(d.getBrain()[rG.nextInt(d.getBrain().length)]);
@@ -83,9 +90,8 @@ public class SetUp
     
     public Android newLine (Android a, Data d)            
     {
-        //
+
         Map<String, String> check = new HashMap<>(); //Map which key and value = serialnum of android used 
-        //int i = 0;
         
         if (a.getModel() == null) 
         {
@@ -96,108 +102,110 @@ public class SetUp
         {
             int newLineSerialNum;
             newLineSerialNum = this.generateRandomSerialNum(2000000, 2999999);
-            boolean temp = this.checkID(IDUsed, newLineSerialNum);
+            boolean temp = newAndroids.containsKey(newLineSerialNum);
 
             while (temp == true) {
                 newLineSerialNum = this.generateRandomSerialNum(2000000, 2999999);
-                temp = this.checkID(IDUsed, newLineSerialNum);
+                temp = newAndroids.containsKey(newLineSerialNum);
             }
             if (temp == false) {
                 a.setSerialNum(String.valueOf(newLineSerialNum));
-                IDUsed.add(newLineSerialNum);
             }
             
             while (a.getArms()==null || a.getBrain()==null || a.getMediaCenter()==null || a.getMobility()==null || a.getPowerPlant()==null || a.getVision()==null)
             {
-                //Map<String,;
-                
-                Android tempAndroid = this.getRandomAndroid(); //generate a temporal android which I get Randomly
+              
+                Android tempAndroid = this.getRandomAndroid(oldFinalAndroids); //generate a temporal android which I get Randomly
                 String tempSerialNum = tempAndroid.getSerialNum();//get the serial num from the android i will use
-                //boolean checkSerialNum = this.checkAndroidUsed(tempSerialNum);
                 boolean available = check.containsKey(tempSerialNum); //I want to check if the Android has donated some parts for this android that i am creating 
 
                 if (available == false)
                 {
                     if (a.getArms()== null && tempAndroid.getArms()!= "removed")
                         {
+                            
                             a.setArms(tempAndroid.getArms().concat(tempAndroid.getModel()).concat(tempSerialNum));
+                            donationArms.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getArms()));
                             tempAndroid.setArms("removed");
-                            oldAndroids.replace(tempSerialNum, tempAndroid);
+                            parts.put(d.parts[0], donationArms);
+                            
                             check.put(tempSerialNum, tempSerialNum);
                             
                             
                             if(a.getBrain()== null && tempAndroid.getBrain()!= "removed")
                             {
                                 a.setBrain(tempAndroid.getBrain().concat(tempAndroid.getModel()).concat(tempSerialNum));
+                                donationBrain.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getBrain()));
                                 tempAndroid.setBrain("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
+                                parts.put(d.parts[1], donationBrain);
                                 
                             }
                             else if(a.getMediaCenter()== null &&tempAndroid.getMediaCenter()!= "removed")
                             {
                                 a.setMediaCenter(tempAndroid.getMediaCenter().concat(tempAndroid.getModel()).concat(tempSerialNum));
+                                donationMediaCenter.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMediaCenter()));
                                 tempAndroid.setMediaCenter("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
+                                parts.put(d.parts[2], donationMediaCenter);
                                 
                             }
                             else if(a.getMobility()== null &&tempAndroid.getMobility()!= "removed")
                             {
                                 a.setMobility(tempAndroid.getMobility().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setMobility("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationMobility.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMobility()));
+                                parts.put(d.parts[3], donationMobility);
                             }
                             else if(a.getPowerPlant()== null && tempAndroid.getPowerPlant()!= "removed")
                             {
                                 a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                                parts.put(d.parts[4], donationPowerPlant);
                             }
                             else if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                             }
                         } 
                     else if (a.getBrain()== null && tempAndroid.getBrain()!= "removed")
                         {
                             a.setBrain(tempAndroid.getBrain().concat(tempAndroid.getModel()).concat(tempSerialNum));
                             tempAndroid.setBrain("removed");
-                            oldAndroids.replace(tempSerialNum, tempAndroid);
+                            donationBrain.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getBrain()));
                             check.put(tempSerialNum, tempSerialNum);
-                            
+                            parts.put(d.parts[1], donationBrain);
                             
                             if(a.getMediaCenter()== null &&tempAndroid.getMediaCenter()!= "removed")
                             {
                                 a.setMediaCenter(tempAndroid.getMediaCenter().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setMediaCenter("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationMediaCenter.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMediaCenter()));
+                                parts.put(d.parts[2], donationMediaCenter);
                             }
                             else if(a.getMobility()== null &&tempAndroid.getMobility()!= "removed")
                             {
                                 a.setMobility(tempAndroid.getMobility().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setMobility("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationMobility.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMobility()));
+                                parts.put(d.parts[3], donationMobility);
                             }
                             
                             else if(a.getPowerPlant()== null &&tempAndroid.getPowerPlant()!= "removed")
                             {
                                 a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                                parts.put(d.parts[4], donationPowerPlant);
                             }
                             else if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                             }
                         }
                     
@@ -205,67 +213,70 @@ public class SetUp
                         {
                             a.setMediaCenter(tempAndroid.getMediaCenter().concat(tempAndroid.getModel()).concat(tempSerialNum));
                             tempAndroid.setMediaCenter("removed");
-                            oldAndroids.replace(tempSerialNum, tempAndroid);
+                            donationMediaCenter.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMediaCenter()));
+                            parts.put(d.parts[2], donationMediaCenter);
                             check.put(tempSerialNum, tempSerialNum);
                            
                             if(a.getMobility()== null &&tempAndroid.getMobility()!= "removed")
                             {
                                 a.setMobility(tempAndroid.getMobility().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setMobility("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationMobility.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMobility()));
+                                parts.put(d.parts[3], donationMobility);
                             }
                             
                             else if(a.getPowerPlant()== null && tempAndroid.getPowerPlant()!= "removed")
                             {
                                 a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                                parts.put(d.parts[4], donationPowerPlant);
                             }
                             else if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                             }
                         }
                     else if (a.getMobility()== null && tempAndroid.getMobility()!= "removed")
                         {
                             a.setMobility(tempAndroid.getMobility().concat(tempAndroid.getModel()).concat(tempSerialNum));
                             tempAndroid.setMobility("removed");
-                            oldAndroids.replace(tempSerialNum, tempAndroid);
+                            donationMobility.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMobility()));
+                            parts.put(d.parts[3], donationMobility);
                             check.put(tempSerialNum, tempSerialNum);
                            
                             if(a.getPowerPlant()== null && tempAndroid.getPowerPlant()!= "removed")
                             {
                                 a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                                parts.put(d.parts[4], donationPowerPlant);
                             }
                             else if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                             }
                         }
                     else if (a.getPowerPlant()== null && tempAndroid.getPowerPlant()!= "removed")
                     {
                             a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                             tempAndroid.setPowerPlant("removed");
-                            oldAndroids.replace(tempSerialNum, tempAndroid);
+                            donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                            parts.put(d.parts[4], donationPowerPlant);
                             check.put(tempSerialNum, tempSerialNum);
                            
                             if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
-                                
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                             }
 
                 }
@@ -275,141 +286,146 @@ public class SetUp
                 {
                     if (a.getArms()== null && tempAndroid.getArms()!= "removed")
                            {
-                               a.setArms(tempAndroid.getArms().concat(tempAndroid.getModel()).concat(tempSerialNum));
-                               tempAndroid.setArms("removed");
-                               oldAndroids.replace(tempSerialNum, tempAndroid);
-                               check.put(tempSerialNum, tempSerialNum);
+                                a.setArms(tempAndroid.getArms().concat(tempAndroid.getModel()).concat(tempSerialNum));
+                                tempAndroid.setArms("removed");
+                                donationArms.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getArms()));
+                                parts.put(d.parts[0], donationArms);
+                                check.put(tempSerialNum, tempSerialNum);
                            }
                      else if (a.getBrain()== null && tempAndroid.getBrain()!= "removed")
                            {
-                               a.setBrain(tempAndroid.getBrain().concat(tempAndroid.getModel()).concat(tempSerialNum));
-                               tempAndroid.setBrain("removed");
-                               oldAndroids.replace(tempSerialNum, tempAndroid);
-                               check.put(tempSerialNum, tempSerialNum);
+                                a.setBrain(tempAndroid.getBrain().concat(tempAndroid.getModel()).concat(tempSerialNum));
+                                tempAndroid.setBrain("removed");
+                                donationBrain.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getBrain()));
+                                parts.put(d.parts[1], donationBrain);
+                                check.put(tempSerialNum, tempSerialNum);
                            }
                     else if (a.getMediaCenter()== null && tempAndroid.getMediaCenter()!= "removed")
                            {
                                a.setMediaCenter(tempAndroid.getMediaCenter().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                tempAndroid.setMediaCenter("removed");
-                               oldAndroids.replace(tempSerialNum, tempAndroid);
+                                donationMediaCenter.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMediaCenter()));
+                               parts.put(d.parts[2], donationMediaCenter);
                                check.put(tempSerialNum, tempSerialNum);
                            }
                     else if (a.getMobility()== null && tempAndroid.getMobility()!= "removed")
                            {
                                a.setMobility(tempAndroid.getMobility().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                tempAndroid.setMobility("removed");
-                               oldAndroids.replace(tempSerialNum, tempAndroid);
+                                donationMobility.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getMobility()));
+                               parts.put(d.parts[3], donationMobility);
                                check.put(tempSerialNum, tempSerialNum);
                            }
                     else if(a.getPowerPlant()== null && tempAndroid.getPowerPlant()!= "removed")
                                {
                                    a.setPowerPlant(tempAndroid.getPowerPlant().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                    tempAndroid.setPowerPlant("removed");
-                                   oldAndroids.replace(tempSerialNum, tempAndroid);
+                                    donationPowerPlant.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getPowerPlant()));
+                                   parts.put(d.parts[4], donationPowerPlant);
                                    check.put(tempSerialNum, tempSerialNum);
                                }
                     else if(a.getVision()== null && tempAndroid.getVision()!= "removed")
                             {
                                 a.setVision(tempAndroid.getVision().concat(tempAndroid.getModel()).concat(tempSerialNum));
                                 tempAndroid.setPowerPlant("removed");
-                                oldAndroids.replace(tempSerialNum, tempAndroid);
+                                donationVision.add(new Donation(tempSerialNum,a.getSerialNum(),tempAndroid.getVision()));
+                                parts.put(d.parts[5], donationVision);
                                 check.put(tempSerialNum, tempSerialNum);
                             }
 
                 }
                 
             }
-//                if (checkSerialNum == true)
-//                {
-//                    // (!"removed".equals(tempAndroid.getBrain()))
-//                    if (tempAndroid.getBrain().equals("removed"))
-//                        {
-//                            a.setBrain(tempAndroid.getBrain().concat(tempAndroid.getModel()).concat(tempSerialNum));
-//                            tempAndroid.setBrain("removed");
-//                            oldAndroids.replace(tempSerialNum, tempAndroid);
-//                            //tempSerialNum.put
-//                            //loop
-//
-//                            freq.put(tempSerialNum,i+1);        
-//
-//                            //int count = freq.get(i);
-//
-//                            Counter count = freq.get(value);
-//                            if (count == null) 
-//                            {
-//                                freq.put(value, new Counter());
-//                            }
-//                            else 
-//                            {
-//                                count.increment();
-//                            }        
-//                        }
-//                }
-            
-//        Android tempAndroid = this.getRandomAndroid(); //generate a temporal android which I get Randomly
-//        String tempSerialNum = tempAndroid.getSerialNum();//get the serial num from the android i will use
-//        boolean available = check.containsKey(tempSerialNum); //I want to check if the Android has donated some parts for this android that i am creating 
-//
-//        while (a.getArms()== null)
-//            {
-//                if (available == false)
-//                
-//            }
         }
         check.clear();
         return a;
     }
     
-    public Android getRandomAndroid ()
+    public Android getRandomAndroid (Map <String,Android> androids)
     {
-        Object[] values = oldAndroids.values().toArray();
+        Object[] values = androids.values().toArray();
         Android androidRandom = new Android();
         androidRandom = (Android)values[rG.nextInt(values.length)];
        
         return androidRandom;
                 
     }
-    public  void creationOldLine() throws IOException
+
+    public  void creationOldLine(Data d) throws IOException
     {
-        int numberCurrentLineCreation = 500;
-        //ArrayList<Android> listCurrentLine = new ArrayList();
-        d.generateAllData();
+        int numberCurrentLineCreation = 10;
         
         //Creation of 30 androids  
         for (int i = 0; i < numberCurrentLineCreation; i++) 
         {
             Android mk = new Android();
+            Android mk2 = new Android();
+
             this.oldLine(mk,d);
+            mk2 = this.duplicateOriginalAndroid(mk);
             
-            //listCurrentLine.add(mk);
-            oldAndroids.put(mk.getSerialNum(),mk);
+            oldInitialAndroids.put(mk.getSerialNum(),mk2);
+            oldFinalAndroids.put(mk.getSerialNum(),mk); 
             System.out.println(mk.toString());
         }
-        //return listCurrentLine;
-       
-        
-    } 
-    public  void creationNewLine() throws IOException
+        } 
+    
+    public Android duplicateOriginalAndroid (Android mk) 
     {
-        int numberNewLineCreation = 400;
-        //ArrayList<Android> listCurrentLine = new ArrayList() ;
-        d.generateAllData();
+        Android mk2 = new Android();
+
+        String auxiliar;
         
+        auxiliar = mk.getModel();
+        mk2.setModel(auxiliar);
+        
+        auxiliar = mk.getSerialNum();
+        mk2.setSerialNum(auxiliar);
+        
+        auxiliar = mk.getModel();
+        mk2.setModel(auxiliar);
+        
+        auxiliar = mk.getSerialNum();
+        mk2.setSerialNum(auxiliar);
+        
+        auxiliar = mk.getArms();
+        mk2.setArms(auxiliar);
+        
+        auxiliar = mk.getBrain();
+        mk2.setBrain(auxiliar);
+        
+        auxiliar = mk.getMobility();
+        mk2.setMobility(auxiliar);
+        
+        auxiliar = mk.getMediaCenter();
+        mk2.setMediaCenter(auxiliar);
+        
+        auxiliar = mk.getPowerPlant();
+        mk2.setPowerPlant(auxiliar);
+        
+        auxiliar = mk.getVision();
+        mk2.setVision(auxiliar);
+         
+        return mk2;
+                
+    }
+        
+    
+    public  void creationNewLine(Data d) throws IOException
+    {
+        int numberNewLineCreation = 5;
+  
         //Creation of 30 androids  
         for (int i = 0; i < numberNewLineCreation; i++) 
         {
             Android newLine = new Android();
+            Donation don = new Donation();
             this.newLine(newLine,d);
-            
-            //listCurrentLine.add(mk);
+
             newAndroids.put(newLine.getSerialNum(),newLine);
             System.out.println(newLine.toString());
         }
-        
-        
-        //return listCurrentLine;
-       
-        
+
     } 
     public int generateRandomSerialNum(int min, int max) 
     {
@@ -418,70 +434,19 @@ public class SetUp
         return serialNum;
     }
     
-    public boolean checkID (ArrayList listID, int ID )
-    {
-        boolean value = false;
-        for(int i=0; i<listID.size();i++)
-        {
-            if (listID.get(i).equals(ID))
-                {
-                    value = true;
-                }
-                      
-        }    
-        return value;
-       
-    }
-    
-//    public void checkAndroidUsed (String value)
+//    public boolean checkID (ArrayList listID, int ID )
 //    {
-//        boolean available = false;
-//        Map<String, Counter> freq = new HashMap<>();
-//        
-//        Counter count = freq.get(value);
-//        if (count == null) 
+//        boolean value = false;
+//        for(int i=0; i<listID.size();i++)
 //        {
-//            freq.put(value, new Counter());
-//            
-//        }
-//        else 
-//        {
-//            count.increment();
-//        }
-//        
-//        if (count.getCounter()<2)
-//            {
-//                available = true;
-//            }
-//           
-//    }
-    
-//    public boolean checkAndroidUsed (String serialNum, HashMap<String,String>)
-//    {
-//        
-//        return false;
-//        
-//    }
-//    
-//    
-//    public void test() 
-//    {
-//        //Android a = new
-//        Map <String,Android> oldAndroids = new HashMap<String, Android>();
-//        oldAndroids.put("11223344", new Android ("mk1","11223344","2.5GHZ","Catapilar","Heat Vision","Claws","Sony","Lithium"));
-//        oldAndroids.put("11223355", new Android ("mk1","11223355","2.5GHZ","Catapilar","Heat Vision","Claws","Samsung","Lithium"));
-//        
-//        for (Entry<String, Android> android : oldAndroids.entrySet())
-//        {
-//                String clave = android.getKey();
-//                Android valor = android.getValue();
-//                System.out.println(clave+"  ->  "+valor.toString());
-//                //Samsung se puede reemplazar por un Scanner o algo asi
-//                if (valor.getMediaCenter()=="Samsung")
+//            if (listID.get(i).equals(ID))
 //                {
-//                        System.out.println("Test muestra Media Center: "+valor.getMediaCenter()); 
+//                    value = true;
 //                }
-//                
-//        }
+//                      
+//        }    
+//        return value;
+//       
 //    }
+    
 }
