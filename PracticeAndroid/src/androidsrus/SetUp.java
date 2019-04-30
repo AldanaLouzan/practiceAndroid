@@ -11,6 +11,8 @@ import java.util.Random;
  * @author aldana
  */
 public class SetUp {
+    
+    public static final String ANSI_RED = "\u001B[31m";
 
     Random rG = new Random();
 
@@ -27,6 +29,7 @@ public class SetUp {
     ArrayList<Donation> donationPowerPlant = new ArrayList();
     ArrayList<Donation> donationVision = new ArrayList();
 
+    public SetUp(){};
     
     public void creationOldLine(Data d) throws IOException 
     {
@@ -35,7 +38,7 @@ public class SetUp {
         for (int i = 0; i < numberCurrentLineCreation; i++) 
         {
             Android mk = new Android();
-            Android mk2 = new Android();//I need a second Android to duplicate the information of Old Androids, in order to keep track of the initial and final stage  
+            Android mk2 = new Android();//I need a second Android to duplicate the information of Old Android, in order to keep track of the initial and final stage  
 
             this.oldLine(mk, d);
             mk2 = this.duplicateOriginalAndroid(mk);
@@ -188,9 +191,9 @@ public class SetUp {
 
                 if (aux == false) //It means that it doesnt appear in the temporal Map, so it hasnt donated any part, then I can set two parts from this Android  
                 {
-                    if (a.getArms() == null && tempAndroid.getArms() != "removed") 
+                    if (a.getArms() == null && tempAndroid.getArms() !="removed") 
                     {
-                        a.setArms(tempAndroid.getArms() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum));//Set the arm
+                        a.setArms(tempAndroid.getArms() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum));//Set the arm
                         donationArms.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getArms())); //add into the ArrayList of Donation objects
                         tempAndroid.setArms("removed");//set the removed part
                         parts.put(d.parts[0], donationArms);//keep track of the donation
@@ -198,113 +201,116 @@ public class SetUp {
                         check.put(tempSerialNum, tempSerialNum);//Add the serial number used to the Temporal Map
 
                         if (a.getBrain() == null && tempAndroid.getBrain() != "removed") {
-                            a.setBrain(tempAndroid.getBrain() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
+                            a.setBrain(tempAndroid.getBrain() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationBrain.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getBrain()));
                             tempAndroid.setBrain("removed");
                             parts.put(d.parts[1], donationBrain);
 
                         } else if (a.getMediaCenter() == null && tempAndroid.getMediaCenter() != "removed") {
-                            a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
+                            a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationMediaCenter.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMediaCenter()));
                             tempAndroid.setMediaCenter("removed");
                             parts.put(d.parts[2], donationMediaCenter);
 
                         } else if (a.getMobility() == null && tempAndroid.getMobility() != "removed") {
-                            a.setMobility(tempAndroid.getMobility() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setMobility("removed");
+                            a.setMobility(tempAndroid.getMobility() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationMobility.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMobility()));
+                            tempAndroid.setMobility("removed");                            
                             parts.put(d.parts[3], donationMobility);
                         } else if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                            tempAndroid.setPowerPlant("removed");
                             parts.put(d.parts[4], donationPowerPlant);
                         } else if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                            a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                            tempAndroid.setVision("removed");
                             parts.put(d.parts[5], donationVision);
                         }
                     } else if (a.getBrain() == null && tempAndroid.getBrain() != "removed") {
-                        a.setBrain(tempAndroid.getBrain() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setBrain("removed");
+                        a.setBrain(tempAndroid.getBrain() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationBrain.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getBrain()));
-                        check.put(tempSerialNum, tempSerialNum);
+                        tempAndroid.setBrain("removed");
                         parts.put(d.parts[1], donationBrain);
+                        
+                        check.put(tempSerialNum, tempSerialNum);
 
                         if (a.getMediaCenter() == null && tempAndroid.getMediaCenter() != "removed") {
-                            a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setMediaCenter("removed");
+                            a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationMediaCenter.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMediaCenter()));
+                            tempAndroid.setMediaCenter("removed");                            
                             parts.put(d.parts[2], donationMediaCenter);
                         } else if (a.getMobility() == null && tempAndroid.getMobility() != "removed") {
-                            a.setMobility(tempAndroid.getMobility() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setMobility("removed");
+                            a.setMobility(tempAndroid.getMobility() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationMobility.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMobility()));
+                            tempAndroid.setMobility("removed");                            
                             parts.put(d.parts[3], donationMobility);
                         } else if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                            tempAndroid.setPowerPlant("removed");                            
                             parts.put(d.parts[4], donationPowerPlant);
                         } else if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                            a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                            tempAndroid.setVision("removed");                            
                             parts.put(d.parts[5], donationVision);
                         }
                     } else if (a.getMediaCenter() == null && tempAndroid.getMediaCenter() != "removed") {
-                        a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setMediaCenter("removed");
+                        a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationMediaCenter.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMediaCenter()));
+                        tempAndroid.setMediaCenter("removed");                        
                         parts.put(d.parts[2], donationMediaCenter);
+                        
                         check.put(tempSerialNum, tempSerialNum);
 
                         if (a.getMobility() == null && tempAndroid.getMobility() != "removed") {
-                            a.setMobility(tempAndroid.getMobility() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setMobility("removed");
+                            a.setMobility(tempAndroid.getMobility() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationMobility.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMobility()));
+                            tempAndroid.setMobility("removed");                            
                             parts.put(d.parts[3], donationMobility);
                         } else if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                            tempAndroid.setPowerPlant("removed");                            
                             parts.put(d.parts[4], donationPowerPlant);
                         } else if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                            a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                            tempAndroid.setVision("removed");                            
                             parts.put(d.parts[5], donationVision);
                         }
                     } else if (a.getMobility() == null && tempAndroid.getMobility() != "removed") {
-                        a.setMobility(tempAndroid.getMobility() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setMobility("removed");
+                        a.setMobility(tempAndroid.getMobility() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationMobility.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMobility()));
+                        tempAndroid.setMobility("removed");                        
                         parts.put(d.parts[3], donationMobility);
+                        
                         check.put(tempSerialNum, tempSerialNum);
 
                         if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                            tempAndroid.setPowerPlant("removed");                            
                             parts.put(d.parts[4], donationPowerPlant);
                         } else if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                            a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                            tempAndroid.setVision("removed");                            
                             parts.put(d.parts[5], donationVision);
                         }
                     } else if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                        a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setPowerPlant("removed");
+                        a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                        tempAndroid.setPowerPlant("removed");                        
                         parts.put(d.parts[4], donationPowerPlant);
                         check.put(tempSerialNum, tempSerialNum);
 
                         if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                            a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                            tempAndroid.setPowerPlant("removed");
+                            a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                             donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                            tempAndroid.setVision("removed");                            
                             parts.put(d.parts[5], donationVision);
                         }
 
@@ -312,40 +318,46 @@ public class SetUp {
                 } else //It means that it appears in the temporal Map, so it has donated one part, then I can set just one part from this Android 
                 {
                     if (a.getArms() == null && tempAndroid.getArms() != "removed") {
-                        a.setArms(tempAndroid.getArms() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setArms("removed");
+                        a.setArms(tempAndroid.getArms() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationArms.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getArms()));
+                        tempAndroid.setArms("removed");                        
                         parts.put(d.parts[0], donationArms);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     } else if (a.getBrain() == null && tempAndroid.getBrain() != "removed") {
-                        a.setBrain(tempAndroid.getBrain() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setBrain("removed");
+                        a.setBrain(tempAndroid.getBrain() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationBrain.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getBrain()));
+                        tempAndroid.setBrain("removed");                        
                         parts.put(d.parts[1], donationBrain);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     } else if (a.getMediaCenter() == null && tempAndroid.getMediaCenter() != "removed") {
-                        a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setMediaCenter("removed");
+                        a.setMediaCenter(tempAndroid.getMediaCenter() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationMediaCenter.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMediaCenter()));
+                        tempAndroid.setMediaCenter("removed");                        
                         parts.put(d.parts[2], donationMediaCenter);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     } else if (a.getMobility() == null && tempAndroid.getMobility() != "removed") {
-                        a.setMobility(tempAndroid.getMobility() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setMobility("removed");
+                        a.setMobility(tempAndroid.getMobility() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationMobility.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getMobility()));
+                        tempAndroid.setMobility("removed");                        
                         parts.put(d.parts[3], donationMobility);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     } else if (a.getPowerPlant() == null && tempAndroid.getPowerPlant() != "removed") {
-                        a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setPowerPlant("removed");
+                        a.setPowerPlant(tempAndroid.getPowerPlant() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationPowerPlant.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getPowerPlant()));
+                        tempAndroid.setPowerPlant("removed");                        
                         parts.put(d.parts[4], donationPowerPlant);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     } else if (a.getVision() == null && tempAndroid.getVision() != "removed") {
-                        a.setVision(tempAndroid.getVision() + " (from Android ".concat(tempAndroid.getModel()) + " ".concat(tempSerialNum) + ") ");
-                        tempAndroid.setPowerPlant("removed");
+                        a.setVision(tempAndroid.getVision() + " (from Android: ".concat(tempAndroid.getModel()) + "| Serial Num: ".concat(tempSerialNum) + ") ");
                         donationVision.add(new Donation(tempSerialNum, a.getSerialNum(), tempAndroid.getVision()));
+                        tempAndroid.setVision("removed");                        
                         parts.put(d.parts[5], donationVision);
+                        
                         check.put(tempSerialNum, tempSerialNum);
                     }
 

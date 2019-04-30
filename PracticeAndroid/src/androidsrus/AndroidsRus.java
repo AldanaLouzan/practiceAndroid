@@ -15,14 +15,16 @@ public class AndroidsRus
 {
     public static void main(String[] args) throws IOException 
     {
-        SetUp su = new SetUp();
-        MenuSetUp mSu = new MenuSetUp();
         Data d = new Data();
         d.getAllData();
-
+        SetUp su = new SetUp();
         su.creationOldLine(d);
         su.creationNewLine(d);
         
-        Menu menu = new Menu(d, mSu,su);     
+        Menu m = new Menu();
+        MenuSetUp mSu = new MenuSetUp();
+        m.initializeMenu(d, mSu, su);
+         
+        
     } 
 }
